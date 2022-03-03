@@ -8,6 +8,8 @@ exports.index = function (req, res) {
 exports.film_list = function (req, res, next) {
   Film.find()
     .sort({ title: 1 })
+    .populate("director")
+    .populate("genre")
     .exec(function (err, list_films) {
       if (err) {
         return next(err);

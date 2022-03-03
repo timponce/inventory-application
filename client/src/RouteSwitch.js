@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useEffect } from "react";
 import Director from "./components/Director/Director";
+import Film from "./components/Film/Film";
 
 export default function RouteSwitch() {
   const [directorData, setDirectorData] = React.useState([]);
@@ -32,6 +33,7 @@ export default function RouteSwitch() {
           path="/catalog/directors"
           element={<Director directorData={directorData} />}
         />
+        <Route path="/catalog/films" element={<Film filmData={filmData} />} />
       </Routes>
     </BrowserRouter>
   );
