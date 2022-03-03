@@ -9,6 +9,7 @@ var FilmSchema = new Schema({
   summary: { type: String, required: true },
   genre: [{ type: Schema.Types.ObjectId, ref: "Genre" }],
   rating: { type: String },
+  image: { type: String },
 });
 
 // Virtual for film's URL
