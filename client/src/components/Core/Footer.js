@@ -41,7 +41,13 @@ export default function Footer() {
               icon={<BsEnvelopeFill />}
             />
           </HStack>
-          <HStack>
+          <HStack spacing="48px">
+            <Link
+              href="https://github.com/timponce/inventory-application"
+              isExternal
+            >
+              Source Code
+            </Link>
             <Link
               href="https://github.com/timponce/inventory-application"
               isExternal
@@ -54,14 +60,10 @@ export default function Footer() {
             >
               Resources Used
             </Link>
-            <Link
-              href="https://github.com/timponce/inventory-application"
-              isExternal
-            >
-              Source Code
-            </Link>
           </HStack>
-          <Text color="gray.500">© 2022 MovieBox by Timothy Ponce</Text>
+          <Text color="gray.500" pt="10px">
+            © 2022 MovieBox by Timothy Ponce
+          </Text>
         </VStack>
       </Center>
     </footer>

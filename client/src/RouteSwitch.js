@@ -30,7 +30,10 @@ export default function RouteSwitch() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/"
+          element={<HomePage {...{ directorData, filmData, genreData }} />}
+        />
         <Route
           path="/catalog/directors"
           element={<Director directorData={directorData} />}
