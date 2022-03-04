@@ -13,19 +13,19 @@ export default function RouteSwitch() {
     fetch("/api/directors")
       .then((res) => res.json())
       .then((data) => setDirectorData(data));
-  }, [directorData]);
+  }, []);
 
   useEffect(() => {
     fetch("/api/films")
       .then((res) => res.json())
       .then((data) => setFilmData(data));
-  }, [filmData]);
+  }, []);
 
   useEffect(() => {
     fetch("/api/genres")
       .then((res) => res.json())
       .then((data) => setGenreData(data));
-  }, [genreData]);
+  }, []);
 
   return (
     <BrowserRouter>

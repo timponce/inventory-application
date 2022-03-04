@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../Core/Header";
 import Footer from "../Core/Footer";
+import Loading from "../Core/Loading";
 import {
   Box,
   Center,
@@ -20,7 +21,7 @@ import {
 export default function HomePage(props) {
   return (
     <Container maxW="1600px" p="0">
-      <Header position="relative" />
+      <Header />
       {props.directorData.length !== 0 &&
       props.filmData.length !== 0 &&
       props.genreData.length !== 0 ? (
@@ -62,19 +63,7 @@ export default function HomePage(props) {
           </Flex>
         </Container>
       ) : (
-        <Center>
-          <VStack>
-            <Heading as="h1" size="4xl">
-              Fetching Data
-            </Heading>
-            <Spinner
-              size="xl"
-              thickness="8px"
-              color="blue.500"
-              emptyColor="gray.200"
-            />
-          </VStack>
-        </Center>
+        <Loading />
       )}
       <Footer />
     </Container>

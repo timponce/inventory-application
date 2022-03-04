@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../Core/Header";
 import Footer from "../Core/Footer";
+import Loading from "../Core/Loading";
 import {
   Heading,
   Box,
@@ -26,7 +27,7 @@ export default function FilmDetail() {
     fetch(`/api/film/${id}`)
       .then((res) => res.json())
       .then((data) => setFilmDetailData(data));
-  }, [id]);
+  }, []);
 
   return (
     <Container maxW="1600px" p="0">
@@ -80,19 +81,7 @@ export default function FilmDetail() {
           </Flex>
         </Box>
       ) : (
-        <Center>
-          <VStack>
-            <Heading as="h1" size="4xl">
-              Fetching Data
-            </Heading>
-            <Spinner
-              size="xl"
-              thickness="8px"
-              color="blue.500"
-              emptyColor="gray.200"
-            />
-          </VStack>
-        </Center>
+        <Loading />
       )}
       <Footer />
     </Container>
