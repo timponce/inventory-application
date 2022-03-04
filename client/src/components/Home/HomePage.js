@@ -19,7 +19,7 @@ import {
 
 export default function HomePage(props) {
   return (
-    <div>
+    <Container maxW="1600px" p="0">
       <Header position="relative" />
       {props.directorData.length !== 0 &&
       props.filmData.length !== 0 &&
@@ -77,6 +77,6 @@ export default function HomePage(props) {
         </Center>
       )}
       <Footer />
-    </div>
+    </Container>
   );
 }

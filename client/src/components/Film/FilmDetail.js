@@ -13,6 +13,7 @@ import {
   Center,
   VStack,
   Spinner,
+  Container,
 } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
 
@@ -28,7 +29,7 @@ export default function FilmDetail() {
   }, [id]);
 
   return (
-    <div>
+    <Container maxW="1600px" p="0">
       <Header />
       {filmDetailData.length !== 0 ? (
         <Box>
@@ -36,7 +37,12 @@ export default function FilmDetail() {
             {filmDetailData.title}
           </Heading>
           <Flex mx="60px" my="60px" gap="40px">
-            <Img src={filmDetailData.image} alt="Movie Poster" maxW="50%"></Img>
+            <Img
+              src={filmDetailData.image}
+              alt="Movie Poster"
+              maxW="50%"
+              maxH="720px"
+            ></Img>
             <SimpleGrid columns={{ sm: 1, md: 2 }} flexGrow="1">
               <GridItem>
                 <Text>Directed by: </Text>
@@ -89,6 +95,6 @@ export default function FilmDetail() {
         </Center>
       )}
       <Footer />
-    </div>
+    </Container>
   );
 }
