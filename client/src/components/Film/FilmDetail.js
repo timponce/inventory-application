@@ -91,11 +91,13 @@ export default function FilmDetail() {
                 <Heading as="h4" size="lg">
                   Genre:{" "}
                 </Heading>
-                {filmDetailData.genre.map((genre, i) => (
-                  <Link key={i}>
-                    <Button>{genre.name}</Button>
-                  </Link>
-                ))}
+                <Flex wrap="wrap" justify="space-around" gap="20px">
+                  {filmDetailData.genre.map((genre, i) => (
+                    <Link key={i}>
+                      <Button>{genre.name}</Button>
+                    </Link>
+                  ))}
+                </Flex>
               </VStack>
               <VStack spacing="20px">
                 <Heading as="h4" size="lg">
