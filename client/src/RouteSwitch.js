@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import React, { useEffect } from "react";
 import HomePage from "./components/Home/HomePage";
 import Director from "./components/Director/Director";
-import Film from "./components/Film/Film";
+import FilmDetail from "./components/Film/FilmDetail";
 
 export default function RouteSwitch() {
   const [directorData, setDirectorData] = React.useState([]);
@@ -13,19 +13,19 @@ export default function RouteSwitch() {
     fetch("/api/directors")
       .then((res) => res.json())
       .then((data) => setDirectorData(data));
-  }, []);
+  }, [directorData]);
 
   useEffect(() => {
     fetch("/api/films")
       .then((res) => res.json())
       .then((data) => setFilmData(data));
-  }, []);
+  }, [filmData]);
 
   useEffect(() => {
     fetch("/api/genres")
       .then((res) => res.json())
       .then((data) => setGenreData(data));
-  }, []);
+  }, [genreData]);
 
   return (
     <BrowserRouter>
@@ -38,7 +38,10 @@ export default function RouteSwitch() {
           path="/catalog/directors"
           element={<Director directorData={directorData} />}
         />
-        <Route path="/catalog/films" element={<Film filmData={filmData} />} />
+        <Route
+          path="/film/:id"
+          element={<FilmDetail filmData={filmData} id={useParams()} />}
+        />
       </Routes>
     </BrowserRouter>
   );

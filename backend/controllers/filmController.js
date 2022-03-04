@@ -19,8 +19,21 @@ exports.film_list = function (req, res, next) {
 };
 
 // Display detail page for a specific film.
-exports.film_detail = function (req, res) {
-  res.send("NOT IMPLEMENTED: Film detail: " + req.params.id);
+exports.film_detail = function (req, res, next) {
+  Film.findById(req.params.id)
+    .populate("director")
+    .populate("genre")
+    .exec(function (err, film) {
+      if (err) {
+        return next(err);
+      }
+      if (film == null) {
+        var err = new Error("Film not found");
+        err.status = 404;
+        return next(err);
+      }
+      res.json(film);
+    });
 };
 
 // Display film create form on GET.

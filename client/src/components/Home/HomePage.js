@@ -12,6 +12,9 @@ import {
   Spinner,
   Text,
   VStack,
+  Button,
+  Link,
+  LinkBox,
 } from "@chakra-ui/react";
 
 export default function HomePage(props) {
@@ -43,6 +46,16 @@ export default function HomePage(props) {
               <Text color="white" decoration="ActiveBorder">
                 {props.filmData[0].summary}
               </Text>
+              <Link href={"/film/" + props.filmData[0]._id} alignSelf="start">
+                <Button
+                  bgColor="red"
+                  color="white"
+                  _hover={{ bgColor: "red.600" }}
+                  _active={{ bgColor: "red.700" }}
+                >
+                  See details
+                </Button>
+              </Link>
               <Spacer />
             </VStack>
             <Spacer />

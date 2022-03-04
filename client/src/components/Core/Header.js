@@ -10,6 +10,7 @@ import {
   Spacer,
   Box,
   HStack,
+  Link,
 } from "@chakra-ui/react";
 import { BsFilm, BsSearch, BsList } from "react-icons/bs";
 
@@ -19,13 +20,15 @@ export default function Header() {
       <Flex px="60px" py="20px">
         <Box>
           <HStack>
-            <IconButton
-              aria-label="Return to Home Page"
-              colorScheme="red"
-              fontSize="20px"
-              isRound="true"
-              icon={<BsFilm />}
-            />
+            <Link href="/">
+              <IconButton
+                aria-label="Return to Home Page"
+                colorScheme="red"
+                fontSize="20px"
+                isRound="true"
+                icon={<BsFilm />}
+              />
+            </Link>
             <Heading as="h3" size="lg">
               MovieBox
             </Heading>
