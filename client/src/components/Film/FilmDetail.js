@@ -8,13 +8,12 @@ import {
   Box,
   Flex,
   Img,
-  SimpleGrid,
-  GridItem,
-  Text,
-  Center,
-  VStack,
-  Spinner,
+  Grid,
   Container,
+  Link,
+  Button,
+  VStack,
+  Spacer,
 } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
 
@@ -29,6 +28,22 @@ export default function FilmDetail() {
       .then((data) => setFilmDetailData(data));
   }, []);
 
+  // const chakraColorfulThemes = [
+  //   "red",
+  //   "orange",
+  //   "yellow",
+  //   "green",
+  //   "teal",
+  //   "blue",
+  //   "cyan",
+  //   "purple",
+  //   "pink",
+  // ];
+
+  // function getRandomFromArray(array) {
+  //   return array[Math.floor(Math.random() * array.length)];
+  // }
+
   return (
     <Container maxW="1600px" p="0">
       <Header />
@@ -37,48 +52,68 @@ export default function FilmDetail() {
           <Heading as="h1" size="4xl" textAlign="center">
             {filmDetailData.title}
           </Heading>
-          <Flex mx="60px" my="60px" gap="40px">
+          <Box
+            display={{ lg: "flex" }}
+            mx="60px"
+            my="60px"
+            justify="space-around"
+          >
+            <Spacer />
             <Img
               src={filmDetailData.image}
-              alt="Movie Poster"
               maxW="50%"
               maxH="720px"
+              alt="Movie Poster"
+              margin="0 auto"
             ></Img>
-            <SimpleGrid columns={{ sm: 1, md: 2 }} flexGrow="1">
-              <GridItem>
-                <Text>Directed by: </Text>
-              </GridItem>
-              <GridItem>
-                <Text>
-                  {filmDetailData.director.first_name +
-                    " " +
-                    filmDetailData.director.last_name}{" "}
-                </Text>
-              </GridItem>
-              <GridItem>
-                <Text>Release Date: </Text>
-              </GridItem>
-              <GridItem>
-                <Text>
+            <VStack ml={{ lg: "60px" }} spacing="40px" textAlign="center">
+              <VStack spacing="20px">
+                <Heading as="h4" size="lg">
+                  Directed by:
+                </Heading>
+                <Link>
+                  <Button>
+                    {filmDetailData.director.first_name +
+                      " " +
+                      filmDetailData.director.last_name}{" "}
+                  </Button>
+                </Link>
+              </VStack>
+              <VStack spacing="20px">
+                <Heading as="h4" size="lg">
+                  Release Date:{" "}
+                </Heading>
+                <Button>
                   {format(parseISO(filmDetailData.release), "MMMM do y")}{" "}
-                </Text>
-              </GridItem>
-              <GridItem>
-                <Text>Genre: </Text>
-              </GridItem>
-              <GridItem>
+                </Button>
+              </VStack>
+              <VStack spacing="20px">
+                <Heading as="h4" size="lg">
+                  Genre:{" "}
+                </Heading>
                 {filmDetailData.genre.map((genre, i) => (
-                  <Text key={i}>{genre.name}</Text>
+                  <Link key={i}>
+                    <Button>{genre.name}</Button>
+                  </Link>
                 ))}
-              </GridItem>
-              <GridItem>
-                <Text>Starring: </Text>
-              </GridItem>
-              <GridItem>
-                <Text>Placeholder </Text>
-              </GridItem>
-            </SimpleGrid>
-          </Flex>
+              </VStack>
+              <VStack spacing="20px">
+                <Heading as="h4" size="lg">
+                  Starring:{" "}
+                </Heading>
+                <Flex wrap="wrap" justify="space-around" gap="20px">
+                  {["Placeholder 1", "Placeholder 2", "Placeholder 3"].map(
+                    (item, i) => (
+                      <Link key={i}>
+                        <Button>{item}</Button>
+                      </Link>
+                    )
+                  )}
+                </Flex>
+              </VStack>
+            </VStack>
+            <Spacer />
+          </Box>
         </Box>
       ) : (
         <Loading />

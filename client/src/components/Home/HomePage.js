@@ -3,19 +3,14 @@ import Header from "../Core/Header";
 import Footer from "../Core/Footer";
 import Loading from "../Core/Loading";
 import {
-  Box,
-  Center,
   Container,
   Flex,
   Heading,
-  Img,
   Spacer,
-  Spinner,
   Text,
   VStack,
   Button,
   Link,
-  LinkBox,
 } from "@chakra-ui/react";
 
 export default function HomePage(props) {
