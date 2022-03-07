@@ -59,12 +59,8 @@ export default function HomePage(props) {
               <Spacer />
             </Flex>
           </Container>
-          <FilmCarousel
-            title={"Featured Movies"}
-            directorData={props.directorData}
-            filmData={props.filmData}
-            genreData={props.genreData}
-          />
+          <FilmCarousel title={"Featured Movies"} filmData={props.filmData} />
+          <FilmCarousel title={"Recently Added"} filmData={props.filmData} />
         </Container>
       ) : (
         <Loading />

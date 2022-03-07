@@ -1,4 +1,6 @@
 var Director = require("../models/director");
+var Film = require("../models/film");
+var async = require("async");
 
 // Display list of all Directors.
 exports.director_list = function (req, res, next) {
@@ -13,8 +15,31 @@ exports.director_list = function (req, res, next) {
 };
 
 // Display detail page for a specific Director.
-exports.director_detail = function (req, res) {
-  res.send("NOT IMPLEMENTED: Director detail: " + req.params.id);
+exports.director_detail = function (req, res, next) {
+  async.parallel(
+    {
+      director: function (callback) {
+        Director.findById(req.params.id).exec(callback);
+      },
+      director_films: function (callback) {
+        Film.find({ director: req.params.id }).populate("genre").exec(callback);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
+      }
+      if (results.director == null) {
+        var err = new Error("Director not found");
+        err.status = 404;
+        return next(err);
+      }
+      res.json({
+        director: results.director,
+        director_films: results.director_films,
+      });
+    }
+  );
 };
 
 // Display Director create form on GET.

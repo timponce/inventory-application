@@ -8,7 +8,6 @@ import {
   Box,
   Flex,
   Img,
-  Grid,
   Container,
   Link,
   Button,
@@ -27,22 +26,6 @@ export default function FilmDetail() {
       .then((res) => res.json())
       .then((data) => setFilmDetailData(data));
   }, []);
-
-  // const chakraColorfulThemes = [
-  //   "red",
-  //   "orange",
-  //   "yellow",
-  //   "green",
-  //   "teal",
-  //   "blue",
-  //   "cyan",
-  //   "purple",
-  //   "pink",
-  // ];
-
-  // function getRandomFromArray(array) {
-  //   return array[Math.floor(Math.random() * array.length)];
-  // }
 
   return (
     <Container maxW="1600px" p="0">
@@ -71,7 +54,7 @@ export default function FilmDetail() {
                 <Heading as="h4" size="lg">
                   Directed by:
                 </Heading>
-                <Link>
+                <Link href={"/director/" + filmDetailData.director._id}>
                   <Button>
                     {filmDetailData.director.first_name +
                       " " +

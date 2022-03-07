@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import React, { useEffect } from "react";
 import HomePage from "./components/Home/HomePage";
-import Director from "./components/Director/Director";
+import DirectorDetail from "./components/Director/DirectorDetail";
 import FilmDetail from "./components/Film/FilmDetail";
 
 export default function RouteSwitch() {
@@ -36,12 +36,10 @@ export default function RouteSwitch() {
         />
         <Route
           path="/catalog/directors"
-          element={<Director directorData={directorData} />}
+          element={<DirectorDetail directorData={directorData} />}
         />
-        <Route
-          path="/film/:id"
-          element={<FilmDetail filmData={filmData} id={useParams()} />}
-        />
+        <Route path="/film/:id" element={<FilmDetail />} />
+        <Route path="/director/:id" element={<DirectorDetail />} />
       </Routes>
     </BrowserRouter>
   );
