@@ -17,7 +17,11 @@ import { BsFilm, BsSearch, BsList } from "react-icons/bs";
 export default function Header() {
   return (
     <header>
-      <Flex px="60px" py="20px">
+      <Flex
+        px={{ base: "10px", md: "60px" }}
+        py="20px"
+        flexDir={{ base: "column", md: "row" }}
+      >
         <Box>
           <HStack>
             <Link href="/">

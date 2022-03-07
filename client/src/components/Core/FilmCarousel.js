@@ -12,6 +12,8 @@ import {
   VStack,
   LinkBox,
   LinkOverlay,
+  Center,
+  AspectRatio,
 } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
 import React from "react";
@@ -25,9 +27,13 @@ export default function FilmCarousel(props) {
   }
 
   return (
-    <Box m="60px">
-      <Flex justify="space-between">
-        <Heading as="h3" size="lg" mb="40px">
+    <Box m={{ base: "10px", md: "60px" }}>
+      <Flex
+        justify={{ base: "center", sm: "space-between" }}
+        flexDir={{ base: "column", sm: "row" }}
+        mb={{ base: "20px", sm: "40px" }}
+      >
+        <Heading as="h3" size="lg">
           {props.title}
         </Heading>
         <Link href="#" color="red">
@@ -37,32 +43,38 @@ export default function FilmCarousel(props) {
           </HStack>
         </Link>
       </Flex>
-      <Grid
-        templateColumns={{
-          base: "repeat(2, 1fr)",
-          md: "null",
-          lg: "repeat(4, 1fr)",
-        }}
-      >
-        {carouselFilms.map((item, i) => (
-          <LinkBox as="section">
-            <VStack key={i} h="fit-content" w="250px" align="start">
-              <Image src={item.image} h="370px" w="250px" />
-              <Text>{format(parseISO(item.release), "yyyy")}</Text>
-              <Heading as="h6" size="sm">
-                <LinkOverlay href={"/film/" + item._id}>
-                  {item.title}
-                </LinkOverlay>
-              </Heading>
-              <HStack>
-                {item.genre.map((genre, i) => (
-                  <Tag key={i}>{genre.name}</Tag>
-                ))}
-              </HStack>
-            </VStack>
-          </LinkBox>
-        ))}
-      </Grid>
+      <Center>
+        <Grid
+          templateColumns={{
+            base: "repeat(2, 1fr)",
+            md: "null",
+            lg: "repeat(4, 1fr)",
+          }}
+          gap={{ base: "10px", sm: "null", md: "40px", lg: "20px", xl: "60px" }}
+          flex="1 1 auto"
+        >
+          {carouselFilms.map((item, i) => (
+            <LinkBox key={i} as="section">
+              <VStack align="start">
+                <AspectRatio alignSelf="stretch" ratio={2 / 3}>
+                  <Image src={item.image} alt="Film cover art" />
+                </AspectRatio>
+                <Text>{format(parseISO(item.release), "yyyy")}</Text>
+                <Heading as="h6" size="sm">
+                  <LinkOverlay href={"/film/" + item._id}>
+                    {item.title}
+                  </LinkOverlay>
+                </Heading>
+                <HStack>
+                  {item.genre.map((genre, i) => (
+                    <Tag key={i}>{genre.name}</Tag>
+                  ))}
+                </HStack>
+              </VStack>
+            </LinkBox>
+          ))}
+        </Grid>
+      </Center>
     </Box>
   );
 }
