@@ -65,8 +65,6 @@ export default function DirectorDetail() {
     }
   }
 
-  console.log(directorDetailData);
-
   return (
     <Container maxW="1600px" p="0">
       <Header />
