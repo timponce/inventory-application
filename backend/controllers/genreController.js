@@ -1,4 +1,6 @@
 var Genre = require("../models/genre");
+const Film = require("../models/film");
+var async = require("async");
 
 // Display list of all Genre.
 exports.genre_list = function (req, res, next) {
@@ -13,8 +15,28 @@ exports.genre_list = function (req, res, next) {
 };
 
 // Display detail page for a specific Genre.
-exports.genre_detail = function (req, res) {
-  res.send("NOT IMPLEMENTED: Genre detail: " + req.params.id);
+exports.genre_detail = function (req, res, next) {
+  async.parallel(
+    {
+      genre: function (callback) {
+        Genre.findById(req.params.id).exec(callback);
+      },
+      genre_films: function (callback) {
+        Film.find({ genre: req.params.id }).populate("genre").exec(callback);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
+      }
+      if (results.genre == null) {
+        var err = new Error("Genre not found");
+        err.status = 404;
+        return next(err);
+      }
+      res.json({ genre: results.genre, genre_films: results.genre_films });
+    }
+  );
 };
 
 // Display Genre create form on GET.

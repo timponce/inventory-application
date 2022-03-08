@@ -81,7 +81,12 @@ export default function FilmDetail() {
                 </Heading>
                 <Flex wrap="wrap" gap="20px">
                   {filmDetailData.genre.map((genre, i) => (
-                    <Button as="a" href="#" size={buttonSize} key={i}>
+                    <Button
+                      as="a"
+                      href={"/genre/" + genre._id}
+                      size={buttonSize}
+                      key={i}
+                    >
                       {genre.name}
                     </Button>
                   ))}
