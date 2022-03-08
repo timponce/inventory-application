@@ -75,7 +75,9 @@ export default function DirectorDetail() {
           <Heading as="h1" size="4xl" textAlign="center">
             {directorFullName}
           </Heading>
-          <Text textAlign="center">{directorLifespan}</Text>
+          <Text textAlign="center" mt="20px">
+            {directorLifespan}
+          </Text>
           <Grid
             templateColumns={{
               base: "repeat(2, 1fr)",

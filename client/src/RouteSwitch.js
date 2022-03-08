@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useEffect } from "react";
 import HomePage from "./components/Home/HomePage";
 import DirectorDetail from "./components/Director/DirectorDetail";
