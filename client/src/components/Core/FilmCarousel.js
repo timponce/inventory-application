@@ -67,7 +67,9 @@ export default function FilmCarousel(props) {
                 </Heading>
                 <HStack>
                   {item.genre.map((genre, i) => (
-                    <Tag key={i}>{genre.name}</Tag>
+                    <Tag as="a" href={"/genre/" + genre._id} key={i}>
+                      {genre.name}
+                    </Tag>
                   ))}
                 </HStack>
               </VStack>

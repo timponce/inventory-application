@@ -106,7 +106,9 @@ export default function DirectorDetail() {
                   </Heading>
                   <HStack>
                     {film.genre.map((genre, i) => (
-                      <Tag key={i}>{genre.name}</Tag>
+                      <Tag as="a" href={"/genre/" + genre._id} key={i}>
+                        {genre.name}
+                      </Tag>
                     ))}
                   </HStack>
                 </VStack>
