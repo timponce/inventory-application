@@ -11,6 +11,11 @@ import {
   Box,
   HStack,
   Link,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuGroup,
 } from "@chakra-ui/react";
 import { BsFilm, BsSearch, BsList } from "react-icons/bs";
 
@@ -48,13 +53,28 @@ export default function Header() {
         <Spacer />
         <Box>
           <Button variant="ghost">Sign in</Button>
-          <IconButton
-            aria-label="Menu"
-            colorScheme="red"
-            fontSize="24px"
-            isRound="true"
-            icon={<BsList />}
-          />
+          <Menu placement="bottom-end">
+            <MenuButton
+              as={IconButton}
+              aria-label="Menu"
+              colorScheme="red"
+              fontSize="24px"
+              isRound="true"
+              icon={<BsList />}
+            ></MenuButton>
+            <MenuList>
+              <MenuGroup title="View">
+                <MenuItem>All Films</MenuItem>
+                <MenuItem>All Directors</MenuItem>
+                <MenuItem>All Genres</MenuItem>
+              </MenuGroup>
+              <MenuGroup title="Create">
+                <MenuItem>Add Film</MenuItem>
+                <MenuItem>Add Director</MenuItem>
+                <MenuItem>Add Genre</MenuItem>
+              </MenuGroup>
+            </MenuList>
+          </Menu>
         </Box>
       </Flex>
     </header>

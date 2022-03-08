@@ -36,8 +36,8 @@ export default function GenreDetail() {
     <Container maxW="1600px" p="0">
       <Header />
       {genreDetailData.length !== 0 ? (
-        <Box mx="60px">
-          <Heading as="h1" size="4xl" textAlign="center">
+        <Box mx={{ base: "10px", md: "60px" }}>
+          <Heading as="h1" size="4xl" textAlign="center" mb="20px">
             {genreDetailData.genre.name}
           </Heading>
           <Grid
@@ -54,7 +54,6 @@ export default function GenreDetail() {
               xl: "60px",
             }}
             flex="1 1 auto"
-            mt="40px"
           >
             {genreDetailData.genre_films.map((film, i) => (
               <LinkBox key={i} as="section">

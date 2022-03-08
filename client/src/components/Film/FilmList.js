@@ -19,63 +19,23 @@ import {
 } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
 
-export default function DirectorDetail() {
-  const [directorDetailData, setDirectorDetailData] = React.useState([]);
-
-  const { id } = useParams();
+export default function FilmList() {
+  const [filmListData, setFilmListData] = React.useState([]);
 
   useEffect(() => {
-    fetch(`/api/director/${id}`)
+    fetch(`/api/films`)
       .then((res) => res.json())
-      .then((data) => setDirectorDetailData(data));
+      .then((data) => setFilmListData(data));
   }, []);
-
-  let directorFullName = "";
-  let directorLifespan = "";
-
-  if (directorDetailData.length !== 0) {
-    if (
-      directorDetailData.director.first_name &&
-      directorDetailData.director.last_name
-    ) {
-      directorFullName =
-        directorDetailData.director.first_name +
-        " " +
-        directorDetailData.director.last_name;
-    }
-    if (
-      !directorDetailData.director.first_name ||
-      !directorDetailData.director.last_name
-    ) {
-      directorFullName = "";
-    }
-
-    if (directorDetailData.director.date_of_birth) {
-      directorLifespan = format(
-        parseISO(directorDetailData.director.date_of_birth),
-        "MMMM do y"
-      );
-    }
-    directorLifespan += " - ";
-    if (directorDetailData.director.date_of_death) {
-      directorLifespan += format(
-        parseISO(directorDetailData.director.date_of_death),
-        "MMMM do y"
-      );
-    }
-  }
 
   return (
     <Container maxW="1600px" p="0">
       <Header />
-      {directorDetailData.length !== 0 ? (
+      {filmListData.length !== 0 ? (
         <Box mx={{ base: "10px", md: "60px" }}>
-          <Heading as="h1" size="4xl" textAlign="center">
-            {directorFullName}
+          <Heading as="h1" size="4xl" textAlign="center" mb="20px">
+            All Films
           </Heading>
-          <Text textAlign="center" my="20px">
-            {directorLifespan}
-          </Text>
           <Grid
             templateColumns={{
               base: "repeat(2, 1fr)",
@@ -91,7 +51,7 @@ export default function DirectorDetail() {
             }}
             flex="1 1 auto"
           >
-            {directorDetailData.director_films.map((film, i) => (
+            {filmListData.map((film, i) => (
               <LinkBox key={i} as="section">
                 <VStack align="start">
                   <AspectRatio alignSelf="stretch" ratio={2 / 3}>
