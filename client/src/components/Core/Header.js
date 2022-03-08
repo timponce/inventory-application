@@ -62,16 +62,28 @@ export default function Header() {
               isRound="true"
               icon={<BsList />}
             ></MenuButton>
-            <MenuList>
+            <MenuList zIndex="popover">
               <MenuGroup title="View">
-                <MenuItem>All Films</MenuItem>
-                <MenuItem>All Directors</MenuItem>
-                <MenuItem>All Genres</MenuItem>
+                <MenuItem as="a" href="/films">
+                  All Films
+                </MenuItem>
+                <MenuItem as="a" href="/directors">
+                  All Directors
+                </MenuItem>
+                <MenuItem as="a" href="/genres">
+                  All Genres
+                </MenuItem>
               </MenuGroup>
               <MenuGroup title="Create">
-                <MenuItem>Add Film</MenuItem>
-                <MenuItem>Add Director</MenuItem>
-                <MenuItem>Add Genre</MenuItem>
+                <MenuItem as="a" href="/film/create">
+                  Add Film
+                </MenuItem>
+                <MenuItem as="a" href="/director/create">
+                  Add Director
+                </MenuItem>
+                <MenuItem as="a" href="genre/create">
+                  Add Genre
+                </MenuItem>
               </MenuGroup>
             </MenuList>
           </Menu>

@@ -5,6 +5,8 @@ import DirectorDetail from "./components/Director/DirectorDetail";
 import FilmDetail from "./components/Film/FilmDetail";
 import GenreDetail from "./components/Genre/GenreDetail";
 import FilmList from "./components/Film/FilmList";
+import DirectorList from "./components/Director/DirectorList";
+import GenreList from "./components/Genre/GenreList";
 
 export default function RouteSwitch() {
   const [directorData, setDirectorData] = React.useState([]);
@@ -44,6 +46,8 @@ export default function RouteSwitch() {
         <Route path="/director/:id" element={<DirectorDetail />} />
         <Route path="/genre/:id" element={<GenreDetail />} />
         <Route path="/films" element={<FilmList />} />
+        <Route path="/directors" element={<DirectorList />} />
+        <Route path="/genres" element={<GenreList />} />
       </Routes>
     </BrowserRouter>
   );

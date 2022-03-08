@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import Header from "../Core/Header";
 import Footer from "../Core/Footer";
 import Loading from "../Core/Loading";
@@ -39,12 +38,10 @@ export default function FilmList() {
           <Grid
             templateColumns={{
               base: "repeat(2, 1fr)",
-              md: "null",
               lg: "repeat(4, 1fr)",
             }}
             gap={{
               base: "10px",
-              sm: "null",
               md: "40px",
               lg: "20px",
               xl: "60px",
