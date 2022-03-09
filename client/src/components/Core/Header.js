@@ -16,8 +16,79 @@ import {
   MenuList,
   MenuItem,
   MenuGroup,
+  FormControl,
+  FormLabel,
+  Stack,
+  ButtonGroup,
+  useDisclosure,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  Text,
 } from "@chakra-ui/react";
 import { BsFilm, BsSearch, BsList } from "react-icons/bs";
+import FocusLock from "react-focus-lock";
+
+const TextInput = React.forwardRef((props, ref) => {
+  return (
+    <FormControl>
+      <FormLabel htmlFor={props.id}>{props.label}</FormLabel>
+      <Input ref={ref} id={props.id} {...props} />
+    </FormControl>
+  );
+});
+
+const Form = ({ firstFieldRef, onCancel }) => {
+  return (
+    <Stack spacing={4}>
+      <TextInput label="Email" id="email" ref={firstFieldRef} />
+      <TextInput label="Password" id="password" type="password" />
+      <Text>
+        Don't have an account?{" "}
+        <Link href="#" color="teal">
+          Register here.
+        </Link>
+      </Text>
+      <ButtonGroup d="flex" justifyContent="flex-end">
+        <Button variant="outline" onClick={onCancel}>
+          Cancel
+        </Button>
+        <Button isDisabled colorScheme="green">
+          Sign in
+        </Button>
+      </ButtonGroup>
+    </Stack>
+  );
+};
+
+const PopoverForm = () => {
+  const { onOpen, onClose, isOpen } = useDisclosure();
+  const firstFieldRef = React.useRef(null);
+
+  return (
+    <Popover
+      isOpen={isOpen}
+      initialFocusRef={firstFieldRef}
+      onOpen={onOpen}
+      onClose={onClose}
+      placement="bottom-end"
+      closeOnBlur={false}
+    >
+      <PopoverTrigger>
+        <Button variant="ghost">Sign in</Button>
+      </PopoverTrigger>
+      <PopoverContent p={5}>
+        <FocusLock returnFocus persistentFocus={false}>
+          <PopoverArrow />
+          <PopoverCloseButton />
+          <Form firstFieldRef={firstFieldRef} onCancel={onClose} />
+        </FocusLock>
+      </PopoverContent>
+    </Popover>
+  );
+};
 
 export default function Header() {
   return (
@@ -52,7 +123,7 @@ export default function Header() {
         </Box>
         <Spacer />
         <Box>
-          <Button variant="ghost">Sign in</Button>
+          <PopoverForm />
           <Menu placement="bottom-end">
             <MenuButton
               as={IconButton}

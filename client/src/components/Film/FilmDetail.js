@@ -34,7 +34,7 @@ export default function FilmDetail() {
       <Header />
       {filmDetailData.length !== 0 ? (
         <Box>
-          <Heading as="h1" size="4xl" textAlign="center" mb="20px">
+          <Heading as="h3" size="2xl" textAlign="center" mb="20px">
             {filmDetailData.title}
           </Heading>
           <Flex
