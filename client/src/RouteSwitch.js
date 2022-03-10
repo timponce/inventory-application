@@ -9,6 +9,7 @@ import DirectorList from "./components/Director/DirectorList";
 import GenreList from "./components/Genre/GenreList";
 import FilmForm from "./components/Film/FilmForm";
 import DirectorForm from "./components/Director/DirectorForm";
+import GenreForm from "./components/Genre/GenreForm";
 
 export default function RouteSwitch() {
   const [directorData, setDirectorData] = React.useState([]);
@@ -48,6 +49,7 @@ export default function RouteSwitch() {
         <Route path="/genres" element={<GenreList />} />
         <Route path="film/create" element={<FilmForm />} />
         <Route path="director/create" element={<DirectorForm />} />
+        <Route path="genre/create" element={<GenreForm />} />
       </Routes>
     </BrowserRouter>
   );

@@ -30,8 +30,6 @@ export default function GenreDetail() {
       .then((data) => setGenreDetailData(data));
   }, []);
 
-  console.log(genreDetailData);
-
   return (
     <Container maxW="1600px" p="0">
       <Header />

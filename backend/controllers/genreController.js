@@ -40,13 +40,21 @@ exports.genre_detail = function (req, res, next) {
 };
 
 // Display Genre create form on GET.
-exports.genre_create_get = function (req, res) {
-  res.send("NOT IMPLEMENTED: Genre create GET");
+exports.genre_create_get = function (req, res, next) {
+  res.json({ title: "Add New Genre" });
 };
 
 // Handle Genre create on POST.
-exports.genre_create_post = function (req, res) {
-  res.send("NOT IMPLEMENTED: Genre create POST");
+exports.genre_create_post = function (req, res, next) {
+  var genre = new Genre({
+    name: req.body.name,
+  });
+  genre.save(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.json(genre.url);
+  });
 };
 
 // Display Genre delete form on GET.
