@@ -152,7 +152,7 @@ export default function Header() {
                 <MenuItem as="a" href="/director/create">
                   Add Director
                 </MenuItem>
-                <MenuItem as="a" href="genre/create">
+                <MenuItem as="a" href="/genre/create">
                   Add Genre
                 </MenuItem>
               </MenuGroup>
