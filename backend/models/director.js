@@ -36,7 +36,7 @@ DirectorSchema.virtual("lifespan").get(function () {
 
 // Virtual for Director's URL
 DirectorSchema.virtual("url").get(function () {
-  return "/director" + this._id;
+  return "/director/" + this._id;
 });
 
 module.exports = mongoose.model("Director", DirectorSchema);

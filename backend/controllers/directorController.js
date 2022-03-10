@@ -43,13 +43,24 @@ exports.director_detail = function (req, res, next) {
 };
 
 // Display Director create form on GET.
-exports.director_create_get = function (req, res) {
-  res.send("NOT IMPLEMENTED: Director create GET");
+exports.director_create_get = function (req, res, next) {
+  res.json({ title: "Add New Director" });
 };
 
 // Handle Director create on POST.
-exports.director_create_post = function (req, res) {
-  res.send("NOT IMPLEMENTED: Director create POST");
+exports.director_create_post = function (req, res, next) {
+  var director = new Director({
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    date_of_birth: req.body.date_of_birth,
+    date_of_death: req.body.date_of_death,
+  });
+  director.save(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.json(director.url);
+  });
 };
 
 // Display Director delete form on GET.
