@@ -10,7 +10,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../Core/Header";
 import Footer from "../Core/Footer";
 import Loading from "../Core/Loading";
@@ -25,17 +25,37 @@ export default function FilmForm() {
     date_of_death: "",
   });
 
+  const { id } = useParams();
+  const isAddMode = !id;
+  let apiUrl = isAddMode
+    ? "/api/director/create"
+    : `/api/director/${id}/update`;
+
   useEffect(() => {
-    fetch("/api/director/create")
+    fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => setDirectorData(data));
   }, []);
+
+  useEffect(() => {
+    if (directorData.length !== 0 && !isAddMode) {
+      setNewDirector({
+        first_name: directorData.director.first_name,
+        last_name: directorData.director.last_name,
+        date_of_birth: directorData.director.date_of_birth.split("T")[0],
+        date_of_death:
+          (directorData.director.date_of_death &&
+            directorData.director.date_of_death.split("T")[0]) ||
+          "",
+      });
+    }
+  }, [directorData]);
 
   let newDirectorUrl = "";
   const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
-    await fetch("/api/director/create", {
+    await fetch(apiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newDirector),

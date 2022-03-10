@@ -53,6 +53,7 @@ export default function RouteSwitch() {
         <Route path="/director/create" element={<DirectorForm />} />
         <Route path="/genre/create" element={<GenreForm />} />
 
+        <Route path="/director/:id/update" element={<DirectorForm />} />
         <Route path="/genre/:id/update" element={<GenreForm />} />
       </Routes>
     </BrowserRouter>

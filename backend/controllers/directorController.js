@@ -74,11 +74,36 @@ exports.director_delete_post = function (req, res) {
 };
 
 // Display Director update form on GET.
-exports.director_update_get = function (req, res) {
-  res.send("NOT IMPLEMENTED: Director update GET");
+exports.director_update_get = function (req, res, next) {
+  Director.findById(req.params.id).exec(function (err, results) {
+    if (err) {
+      return next(err);
+    }
+    res.json({
+      title: `Update Director: ${results.first_name} ${results.last_name}`,
+      director: results,
+    });
+  });
 };
 
 // Handle Director update on POST.
-exports.director_update_post = function (req, res) {
-  res.send("NOT IMPLEMENTED: Director update POST");
+exports.director_update_post = function (req, res, next) {
+  var director = new Director({
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    date_of_birth: req.body.date_of_birth,
+    date_of_death: req.body.date_of_death,
+    _id: req.params.id,
+  });
+  Director.findByIdAndUpdate(
+    req.params.id,
+    director,
+    {},
+    function (err, result) {
+      if (err) {
+        return next(err);
+      }
+      res.json(result.url);
+    }
+  );
 };
