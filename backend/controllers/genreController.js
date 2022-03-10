@@ -68,11 +68,25 @@ exports.genre_delete_post = function (req, res) {
 };
 
 // Display Genre update form on GET.
-exports.genre_update_get = function (req, res) {
-  res.send("NOT IMPLEMENTED: Genre update GET");
+exports.genre_update_get = function (req, res, next) {
+  Genre.findById(req.params.id).exec(function (err, results) {
+    if (err) {
+      return next(err);
+    }
+    res.json({ title: `Update Genre: ${results.name}`, genre: results });
+  });
 };
 
 // Handle Genre update on POST.
-exports.genre_update_post = function (req, res) {
-  res.send("NOT IMPLEMENTED: Genre update POST");
+exports.genre_update_post = function (req, res, next) {
+  var genre = new Genre({
+    name: req.body.name,
+    _id: req.params.id,
+  });
+  Genre.findByIdAndUpdate(req.params.id, genre, {}, function (err, result) {
+    if (err) {
+      return next(err);
+    }
+    res.json(result.url);
+  });
 };

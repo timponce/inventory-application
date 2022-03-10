@@ -4,17 +4,14 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Icon,
-  Tooltip,
   Button,
   Heading,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../Core/Header";
 import Footer from "../Core/Footer";
 import Loading from "../Core/Loading";
-import { BsFillQuestionCircleFill } from "react-icons/bs";
 
 export default function GenreForm() {
   const [genreData, setGenreData] = React.useState([]);
@@ -22,8 +19,12 @@ export default function GenreForm() {
     name: "",
   });
 
+  const { id } = useParams();
+  const isAddMode = !id;
+  let apiUrl = isAddMode ? "/api/genre/create" : `/api/genre/${id}/update`;
+
   useEffect(() => {
-    fetch("/api/genre/create")
+    fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => setGenreData(data));
   }, []);
@@ -32,7 +33,7 @@ export default function GenreForm() {
   const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
-    await fetch("/api/genre/create", {
+    await fetch(apiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newGenre),
@@ -67,6 +68,7 @@ export default function GenreForm() {
                 name="name"
                 value={newGenre.name}
                 onChange={(e) => handleChange(e)}
+                placeholder={!isAddMode && genreData.genre.name}
               />
             </FormControl>
             <Button mt="20px" type="submit">
