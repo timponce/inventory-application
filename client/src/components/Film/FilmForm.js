@@ -15,6 +15,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../Core/Header";
 import Footer from "../Core/Footer";
 import Loading from "../Core/Loading";
@@ -22,12 +23,55 @@ import { BsFillQuestionCircleFill } from "react-icons/bs";
 
 export default function FilmForm() {
   const [filmData, setFilmData] = React.useState([]);
+  const [newFilm, setNewFilm] = React.useState({
+    title: "",
+    director: "",
+    release: "",
+    summary: "",
+    genre: "",
+    image: "",
+  });
 
   useEffect(() => {
     fetch("/api/film/create")
       .then((res) => res.json())
       .then((data) => setFilmData(data));
   }, []);
+
+  let newFilmUrl = "";
+  const navigate = useNavigate();
+  async function handleSubmit(e) {
+    e.preventDefault();
+    await fetch("/api/film/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newFilm),
+    })
+      .then((res) => res.json())
+      .then((url) => (newFilmUrl = url));
+    navigate(newFilmUrl);
+  }
+
+  const handleChange = (e) => {
+    setNewFilm((prevNewFilm) => ({
+      ...prevNewFilm,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleCheckbox = (e) => {
+    if (e.target.checked) {
+      setNewFilm((prevNewFilm) => ({
+        ...prevNewFilm,
+        genre: [...prevNewFilm.genre, e.target.value],
+      }));
+    } else {
+      setNewFilm((prevNewFilm) => ({
+        ...prevNewFilm,
+        genre: prevNewFilm.genre.filter((item) => item !== e.target.value),
+      }));
+    }
+  };
 
   return (
     <Container maxW="1600px" p="0">
@@ -37,18 +81,29 @@ export default function FilmForm() {
           <Heading as="h1" size="4xl" textAlign="center" mb="20px">
             {filmData.title}
           </Heading>
-          <form method="POST" action="">
+          <form method="POST" action="" onSubmit={handleSubmit}>
             <FormControl isRequired>
               <FormLabel htmlFor="title" mt="20px">
                 Title
               </FormLabel>
-              <Input id="title" />
+              <Input
+                id="title"
+                name="title"
+                value={newFilm.title}
+                onChange={(e) => handleChange(e)}
+              />
             </FormControl>
             <FormControl isRequired>
               <FormLabel htmlFor="director" mt="20px">
                 Director
               </FormLabel>
-              <Select id="director" placeholder="Select director">
+              <Select
+                id="director"
+                name="director"
+                value={newFilm.director}
+                onChange={(e) => handleChange(e)}
+                placeholder="Select director"
+              >
                 {filmData.directors.map((director) => (
                   <option key={director._id} value={director._id}>
                     {director.first_name + " " + director.last_name}
@@ -60,7 +115,13 @@ export default function FilmForm() {
               <FormLabel htmlFor="release" mt="20px">
                 Release Date
               </FormLabel>
-              <Input id="date" type="date" />
+              <Input
+                id="release"
+                name="release"
+                value={newFilm.release}
+                onChange={(e) => handleChange(e)}
+                type="date"
+              />
             </FormControl>
             <FormControl isRequired>
               <FormLabel htmlFor="summary" mt="20px">
@@ -76,7 +137,12 @@ export default function FilmForm() {
                   </span>
                 </Tooltip>
               </FormLabel>
-              <Textarea id="summary" />
+              <Textarea
+                id="summary"
+                name="summary"
+                value={newFilm.sumamry}
+                onChange={(e) => handleChange(e)}
+              />
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="genre" mt="20px">
@@ -85,7 +151,13 @@ export default function FilmForm() {
               <CheckboxGroup>
                 <Stack spacing="10px" direction={{ base: "column", md: "row" }}>
                   {filmData.genres.map((genre) => (
-                    <Checkbox key={genre._id} id={genre._id}>
+                    <Checkbox
+                      key={genre._id}
+                      id={genre._id}
+                      name="genre"
+                      value={genre._id}
+                      onChange={(e) => handleCheckbox(e)}
+                    >
                       {genre.name}
                     </Checkbox>
                   ))}
@@ -93,7 +165,7 @@ export default function FilmForm() {
               </CheckboxGroup>
             </FormControl>
             <FormControl isRequired>
-              <FormLabel htmlFor="imageUrl" mt="20px">
+              <FormLabel htmlFor="image" mt="20px">
                 Image URL
                 <Tooltip
                   label="Perform an online image search for the film title. Preferably, filter the results for large images only (for google.com: select 'Tools', 'Size' dropdown, 'Large'). Right click image and select 'Open Image in New Tab'. Copy and paste the url here."
@@ -106,7 +178,12 @@ export default function FilmForm() {
                   </span>
                 </Tooltip>
               </FormLabel>
-              <Input id="imageUrl" />
+              <Input
+                id="image"
+                name="image"
+                value={newFilm.image}
+                onChange={(e) => handleChange(e)}
+              />
             </FormControl>
             <Button mt="20px" type="submit">
               Submit

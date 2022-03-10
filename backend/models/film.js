@@ -14,7 +14,7 @@ var FilmSchema = new Schema({
 
 // Virtual for film's URL
 FilmSchema.virtual("url").get(function () {
-  return "/catalog/film/" + this._id;
+  return "/film/" + this._id;
 });
 
 module.exports = mongoose.model("Film", FilmSchema);
