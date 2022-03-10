@@ -29,6 +29,14 @@ export default function GenreForm() {
       .then((data) => setGenreData(data));
   }, []);
 
+  useEffect(() => {
+    if (genreData.length !== 0 && !isAddMode) {
+      setNewGenre({
+        name: genreData.genre.name,
+      });
+    }
+  }, [genreData]);
+
   let newGenreUrl = "";
   const navigate = useNavigate();
   async function handleSubmit(e) {
@@ -68,7 +76,6 @@ export default function GenreForm() {
                 name="name"
                 value={newGenre.name}
                 onChange={(e) => handleChange(e)}
-                placeholder={!isAddMode && genreData.genre.name}
               />
             </FormControl>
             <Button mt="20px" type="submit">
