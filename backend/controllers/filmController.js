@@ -93,11 +93,50 @@ exports.film_delete_post = function (req, res) {
 };
 
 // Display film update form on GET.
-exports.film_update_get = function (req, res) {
-  res.send("NOT IMPLEMENTED: Film update GET");
+exports.film_update_get = function (req, res, next) {
+  async.parallel(
+    {
+      film: function (callback) {
+        Film.findById(req.params.id)
+          .populate("director")
+          .populate("genre")
+          .exec(callback);
+      },
+      directors: function (callback) {
+        Director.find(callback);
+      },
+      genres: function (callback) {
+        Genre.find(callback);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
+      }
+      res.json({
+        title: `Update Film: ${results.film.title}`,
+        film: results.film,
+        directors: results.directors,
+        genres: results.genres,
+      });
+    }
+  );
 };
 
 // Handle film update on POST.
-exports.film_update_post = function (req, res) {
-  res.send("NOT IMPLEMENTED: Film update POST");
+exports.film_update_post = function (req, res, next) {
+  var film = new Film({
+    title: req.body.title,
+    director: req.body.director,
+    summary: req.body.summary,
+    genre: req.body.genre,
+    image: req.body.image,
+    _id: req.params.id,
+  });
+  Film.findByIdAndUpdate(req.params.id, film, {}, function (err, result) {
+    if (err) {
+      return next(err);
+    }
+    res.json(result.url);
+  });
 };
