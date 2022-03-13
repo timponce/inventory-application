@@ -31,6 +31,7 @@ export default function FilmForm() {
     genre: "",
     image: "",
   });
+  const [checkedGenres, setCheckedGenres] = React.useState([]);
 
   const { id } = useParams();
   const isAddMode = !id;
@@ -52,6 +53,7 @@ export default function FilmForm() {
         genre: filmData.film.genre,
         image: filmData.film.image,
       });
+      setCheckedGenres(filmData.film.genre.map((genre) => genre._id));
     }
   }, [filmData]);
 
@@ -59,14 +61,18 @@ export default function FilmForm() {
   const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
-    await fetch(apiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newFilm),
-    })
-      .then((res) => res.json())
-      .then((url) => (newFilmUrl = url));
-    navigate(newFilmUrl);
+    if (checkedGenres.length > 0) {
+      await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newFilm),
+      })
+        .then((res) => res.json())
+        .then((url) => (newFilmUrl = url));
+      navigate(newFilmUrl);
+    } else {
+      alert("At least one genre is required");
+    }
   }
 
   const handleChange = (e) => {
@@ -76,21 +82,13 @@ export default function FilmForm() {
     }));
   };
 
-  const handleCheckbox = (e) => {
-    if (e.target.checked) {
-      setNewFilm((prevNewFilm) => ({
-        ...prevNewFilm,
-        genre: [...prevNewFilm.genre, e.target.value],
-      }));
-    } else {
-      setNewFilm((prevNewFilm) => ({
-        ...prevNewFilm,
-        genre: prevNewFilm.genre.filter((item) => item !== e.target.value),
-      }));
-    }
+  const handleCheckbox = (genreArray) => {
+    setCheckedGenres(genreArray);
+    setNewFilm((prevNewFilm) => ({
+      ...prevNewFilm,
+      genre: genreArray,
+    }));
   };
-
-  console.log(newFilm);
 
   return (
     <Container maxW="1600px" p="0">
@@ -166,8 +164,18 @@ export default function FilmForm() {
             <FormControl>
               <FormLabel htmlFor="genre" mt="20px">
                 Genre
+                <span
+                  role="presentation"
+                  aria-hidden="true"
+                  className="chakra-form__required-indicator css-1ssjhh"
+                >
+                  *
+                </span>
               </FormLabel>
-              <CheckboxGroup>
+              <CheckboxGroup
+                value={checkedGenres}
+                onChange={(value) => handleCheckbox(value)}
+              >
                 <Stack
                   spacing="10px"
                   direction={{ base: "column", md: "row" }}
@@ -183,9 +191,8 @@ export default function FilmForm() {
                         id={genre._id}
                         name="genre"
                         value={genre._id}
-                        onChange={(e) => handleCheckbox(e)}
                       >
-                        {genre._id}
+                        {genre.name}
                       </Checkbox>
                     ) : (
                       <Checkbox
@@ -193,7 +200,6 @@ export default function FilmForm() {
                         id={genre._id}
                         name="genre"
                         value={genre._id}
-                        onChange={(e) => handleCheckbox(e)}
                       >
                         {genre.name}
                       </Checkbox>
