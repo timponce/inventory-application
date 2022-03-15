@@ -56,6 +56,8 @@ export default function RouteSwitch() {
         <Route path="/film/:id/update" element={<FilmForm />} />
         <Route path="/director/:id/update" element={<DirectorForm />} />
         <Route path="/genre/:id/update" element={<GenreForm />} />
+
+        <Route path="/film/:id/delete" element={<FilmDetail />} />
       </Routes>
     </BrowserRouter>
   );

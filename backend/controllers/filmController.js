@@ -36,7 +36,7 @@ exports.film_detail = function (req, res, next) {
         err.status = 404;
         return next(err);
       }
-      res.json(film);
+      res.json({ isDelete: "", film: film });
     });
 };
 
@@ -83,13 +83,34 @@ exports.film_create_post = function (req, res, next) {
 };
 
 // Display film delete form on GET.
-exports.film_delete_get = function (req, res) {
-  res.send("NOT IMPLEMENTED: Film delete GET");
+exports.film_delete_get = function (req, res, next) {
+  Film.findById(req.params.id)
+    .populate("director")
+    .populate("genre")
+    .exec(function (err, results) {
+      if (err) {
+        return next(err);
+      }
+      if (results == null) {
+        res.json("/films");
+      }
+      res.json({ isDelete: "Delete this film?", film: results });
+    });
 };
 
 // Handle film delete on POST.
-exports.film_delete_post = function (req, res) {
-  res.send("NOT IMPLEMENTED: Film delete POST");
+exports.film_delete_post = function (req, res, next) {
+  Film.findById(req.params.id).exec(function (err, results) {
+    if (err) {
+      return next(err);
+    }
+    Film.findByIdAndDelete(results, function deleteFilm(err) {
+      if (err) {
+        return next(err);
+      }
+      res.json("/films");
+    });
+  });
 };
 
 // Display film update form on GET.
