@@ -30,6 +30,7 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
 import { BsPencilSquare } from "react-icons/bs";
@@ -40,6 +41,8 @@ export default function GenreDetail() {
   const { id } = useParams();
   const [isDelete, setIsDelete] = React.useState(false);
   let apiUrl = isDelete ? `/api/genre/${id}/delete` : `/api/genre/${id}`;
+
+  const toast = useToast();
 
   useEffect(() => {
     fetch(apiUrl)
@@ -54,9 +57,19 @@ export default function GenreDetail() {
   let navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
-    await fetch(apiUrl, {
-      method: "POST",
-    }).then(() => navigate("/genres"));
+    genreDetailData.genre_films.length === 0
+      ? await fetch(apiUrl, {
+          method: "POST",
+        }).then(() => navigate("/genres"))
+      : toast({
+          title: "Delete Failed.",
+          description:
+            "Please delete all films associated with this genre to continue.",
+          position: "top",
+          status: "error",
+          duration: "5000",
+          isClosable: true,
+        });
   }
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -105,7 +118,7 @@ export default function GenreDetail() {
             <AlertDialogOverlay>
               <form method="POST" action="" onSubmit={handleSubmit}>
                 <AlertDialogContent>
-                  <AlertDialogHeader>Delete Film</AlertDialogHeader>
+                  <AlertDialogHeader>Delete Genre</AlertDialogHeader>
                   <AlertDialogBody>
                     Are you sure? You can't undo this action afterwards.
                   </AlertDialogBody>

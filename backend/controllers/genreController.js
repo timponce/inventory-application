@@ -58,13 +58,43 @@ exports.genre_create_post = function (req, res, next) {
 };
 
 // Display Genre delete form on GET.
-exports.genre_delete_get = function (req, res) {
-  res.send("NOT IMPLEMENTED: Genre delete GET");
+exports.genre_delete_get = function (req, res, next) {
+  async.parallel(
+    {
+      genre: function (callback) {
+        Genre.findById(req.params.id).exec(callback);
+      },
+      genre_films: function (callback) {
+        Film.find({ genre: req.params.id }).populate("genre").exec(callback);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
+      }
+      if (results.genre == null) {
+        var err = new Error("Genre not found");
+        err.status = 404;
+        return next(err);
+      }
+      res.json({ genre: results.genre, genre_films: results.genre_films });
+    }
+  );
 };
 
 // Handle Genre delete on POST.
-exports.genre_delete_post = function (req, res) {
-  res.send("NOT IMPLEMENTED: Genre delete POST");
+exports.genre_delete_post = function (req, res, next) {
+  Genre.findById(req.params.id).exec(function (err, results) {
+    if (err) {
+      return next(err);
+    }
+    Genre.findByIdAndDelete(results, function deleteGenre(err) {
+      if (err) {
+        return next(err);
+      }
+      res.json("/genres");
+    });
+  });
 };
 
 // Display Genre update form on GET.
