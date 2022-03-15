@@ -66,7 +66,7 @@ export default function FilmDetail(props) {
       {filmDetailData.length !== 0 ? (
         <Box>
           <Center mb="40px">
-            <Heading as="h2" size="3xl">
+            <Heading as="h1" size="4xl">
               {filmDetailData.film.title}
             </Heading>
             <Menu>
