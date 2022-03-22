@@ -7,10 +7,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd backend && npm install && npm start",
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "server": "cd backend && node ./bin/www",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
     "devstart": "concurrently \"cd backend && npm run start\" \"cd client && npm start\"",
-    "serverstart": "concurrently \"cd backend && npm run serverstart\" \"cd client && npm start\"",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "serverstart": "concurrently \"cd backend && npm run serverstart\" \"cd client && npm start\""
   },
   "keywords": [],
   "author": "",
