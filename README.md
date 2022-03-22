@@ -1,6 +1,6 @@
 # Movie Box (Inventory Application)
 
-![Screengrab of app's homepage](/public/images/movie-box-screenshot-homepage.png?raw=true)
+![Screengrab of app's homepage](/screenshots/movie-box-screenshot-homepage.png?raw=true)
 
 ## [See it in action](https://aqueous-plateau-91566.herokuapp.com)
 
@@ -49,10 +49,10 @@ I used the following resources to help me create this:
 ## Additional Images
 
 ###### All Films
-![Screengrab of app's films page](/public/images/movie-box-screenshot-all-films.png?raw=true)
+![Screengrab of app's films page](/screenshots/movie-box-screenshot-all-films.png?raw=true)
 
 ###### Film Detail Page
-![Screengrab of app's film detail page](/public/images/movie-box-screenshot-film-detail.png?raw=true)
+![Screengrab of app's film detail page](/screenshots/movie-box-screenshot-film-detail.png?raw=true)
 
 ###### Film Edit Form
-![Screengrab of app's film edit form](/public/images/movie-box-screenshot-film-edit-form.png?raw=true)
+![Screengrab of app's film edit form](/screenshots/movie-box-screenshot-film-edit-form.png?raw=true)
