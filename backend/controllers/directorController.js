@@ -64,13 +64,46 @@ exports.director_create_post = function (req, res, next) {
 };
 
 // Display Director delete form on GET.
-exports.director_delete_get = function (req, res) {
-  res.send("NOT IMPLEMENTED: Director delete GET");
+exports.director_delete_get = function (req, res, next) {
+  async.parallel(
+    {
+      director: function (callback) {
+        Director.findById(req.params.id).exec(callback);
+      },
+      director_films: function (callback) {
+        Film.find({ director: req.params.id }).populate("genre").exec(callback);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
+      }
+      if (results.director == null) {
+        var err = new Error("Director not found");
+        err.status = 404;
+        return next(err);
+      }
+      res.json({
+        director: results.director,
+        director_films: results.director_films,
+      });
+    }
+  );
 };
 
 // Handle Director delete on POST.
-exports.director_delete_post = function (req, res) {
-  res.send("NOT IMPLEMENTED: Director delete POST");
+exports.director_delete_post = function (req, res, next) {
+  Director.findById(req.params.id).exec(function (err, results) {
+    if (err) {
+      return next(err);
+    }
+    Director.findByIdAndDelete(results, function deleteDirector(err) {
+      if (err) {
+        return next(err);
+      }
+      res.json("/directors");
+    });
+  });
 };
 
 // Display Director update form on GET.

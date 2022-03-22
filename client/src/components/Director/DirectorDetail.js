@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../Core/Header";
 import Footer from "../Core/Footer";
 import Loading from "../Core/Loading";
@@ -16,19 +16,64 @@ import {
   LinkOverlay,
   HStack,
   Tag,
+  Center,
+  Menu,
+  MenuButton,
+  IconButton,
+  MenuList,
+  MenuItem,
+  useToast,
+  useDisclosure,
+  AlertDialogOverlay,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
+  Button,
 } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
+import { BsPencilSquare } from "react-icons/bs";
 
 export default function DirectorDetail() {
   const [directorDetailData, setDirectorDetailData] = React.useState([]);
 
   const { id } = useParams();
+  const [isDelete, setIsDelete] = React.useState(false);
+  let apiUrl = isDelete ? `/api/director/${id}/delete` : `/api/director/${id}`;
+
+  const toast = useToast();
 
   useEffect(() => {
     fetch(`/api/director/${id}`)
       .then((res) => res.json())
       .then((data) => setDirectorDetailData(data));
   }, []);
+
+  useEffect(() => {
+    setIsDelete(isOpen);
+  });
+
+  let navigate = useNavigate();
+  async function handleSubmit(e) {
+    e.preventDefault();
+    directorDetailData.director_films.length === 0
+      ? await fetch(apiUrl, {
+          method: "POST",
+        }).then(() => navigate("/directors"))
+      : toast({
+          title: "Delete Failed.",
+          description:
+            "Please delete all films associated with this director to continue.",
+          position: "top",
+          status: "error",
+          duration: "5000",
+          isClosable: true,
+        });
+  }
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef();
 
   let directorFullName = "";
   let directorLifespan = "";
@@ -70,9 +115,65 @@ export default function DirectorDetail() {
       <Header />
       {directorDetailData.length !== 0 ? (
         <Box mx={{ base: "10px", md: "60px" }}>
-          <Heading as="h1" size="4xl" textAlign="center">
-            {directorFullName}
-          </Heading>
+          <Center>
+            <Heading as="h1" size="4xl" textAlign="center" mb="20px">
+              {directorFullName}
+            </Heading>
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label="Menu"
+                fontSize="16px"
+                size="sm"
+                variant="ghost"
+                alignSelf="start"
+                icon={<BsPencilSquare />}
+              ></MenuButton>
+              <MenuList>
+                <MenuItem as="a" href={`/director/${id}/update`}>
+                  Edit
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    onOpen();
+                    setIsDelete(true);
+                  }}
+                >
+                  Delete
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </Center>
+          <AlertDialog
+            isOpen={isOpen}
+            leastDestructiveRef={cancelRef}
+            onClose={onClose}
+            blockScrollOnMount={false}
+          >
+            <AlertDialogOverlay>
+              <form method="POST" action="" onSubmit={handleSubmit}>
+                <AlertDialogContent>
+                  <AlertDialogHeader>Delete Director</AlertDialogHeader>
+                  <AlertDialogBody>
+                    Are you sure? You can't undo this action afterwards.
+                  </AlertDialogBody>
+                  <AlertDialogFooter>
+                    <Button ref={cancelRef} onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      colorScheme="red"
+                      onClick={onClose}
+                      ml="3"
+                    >
+                      Delete
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </form>
+            </AlertDialogOverlay>
+          </AlertDialog>
           <Text textAlign="center" my="20px">
             {directorLifespan}
           </Text>
