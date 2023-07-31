@@ -1,3 +1,0 @@
-[submodule "/inventory-application"]
-    path = /inventory-application
-    url = git@github.com:timponce/inventory-application.git
