@@ -10,7 +10,6 @@
     "build": "cd client && npm run build",
     "install-client": "cd client && npm install",
     "install-server": "cd backend && npm install",
-    "heroku-postbuild": "npm run install-client && npm run install-server && npm run build",
     "server": "cd backend && node ./bin/www",
     "client": "cd client && npm start",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
