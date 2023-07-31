@@ -1,12 +1,12 @@
 # Movie Box (Inventory Application)
 
-![Screengrab of app's homepage](/public/images/movie-box-screenshot-homepage.png?raw=true)
+![Screengrab of app's homepage](/screenshots/movie-box-screenshot-homepage.png?raw=true)
 
 ## [See it in action](https://aqueous-plateau-91566.herokuapp.com)
 
 ## Project Summary
 
-This web app has the basic capabilities neccessary to manage the catalog of a library of books.
+This web app is a basic movie database where one can view, create, edit, and delete films as well as their directors and genres.
 
 Using what I learned about creating an Express application from a [previous project](https://github.com/timponce/express-locallibrary-tutorial) from The Odin Project and Mozilla Developer Network, I created a CRUD web application using the MERN stack.
 
@@ -26,12 +26,13 @@ Note: This web application is functional but not complete.
 
 I would like to implement and improve the following:
 
-1. Finish the film carousels on the home page to scroll and sort films (e.g. by date released, recently added, etc.)
-2. Add ability to search
-3. Require an account and authentication to be able to edit films, directors, genres
-4. Sorting functions to allow a user to filter the films using multiple constraints (e.g. filter only 'Action' films released in '1982')
-5. Add the cast to the films
-6. Implement a rating system for users to interact with the site
+1. Improve responsive design for small screens
+2. Finish the film carousels on the home page to scroll and sort films (e.g. by date released, recently added, etc.)
+3. Add ability to search
+4. Require an account and authentication to be able to edit films, directors, genres
+5. Sorting functions to allow a user to filter the films using multiple constraints (e.g. filter only 'Action' films released in '1982')
+6. Add the cast to the films
+7. Implement a rating system for users to interact with the site
 
 I used the following technologies to complete my app:
 
