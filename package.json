@@ -14,7 +14,7 @@
     "client": "cd client && npm start",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "devstart": "concurrently \"cd backend && npm run start\" \"cd client && npm start\"",
-    "serverstart": "concurrently \"cd backend && npm run serverstart\" \"cd client && npm start\""
+    "serverstart": "concurrently \"cd backend && npm install && npm run serverstart\" \"cd client && npm install && npm start\""
   },
   "keywords": [],
   "author": "",
